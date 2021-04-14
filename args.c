@@ -49,6 +49,7 @@ int parse_args(int argc, char *argv[], int optc, ProgramOption optv[]) {
 				if (!argfound) {
 					printf("Illegal option! (%s)\n", argv[argi] + 2);
 					illegal_options_found = true;
+					print_usage(argv[0], optc, optv);
 				}
 			}
 		// Check short flags.
@@ -88,12 +89,54 @@ int parse_args(int argc, char *argv[], int optc, ProgramOption optv[]) {
 				if (!argfound) {
 					printf("Illegal option! (%c)\n", argv[argi][chari]);
 					illegal_options_found = true;
+					print_usage(argv[0], optc, optv);
 				}
 			}
 		} else {
 			printf("Unknown option: %s\n", argv[argi]);
 			illegal_options_found = true;
+			print_usage(argv[0], optc, optv);
 		}
 	}
 	return illegal_options_found ? PARSE_ERROR : PARSE_SUCCESS;
+}
+
+void print_usage(char *name, int optc, ProgramOption optv[]) {
+	if (optc == 0) {
+		printf("Usage: %s\n", name);
+		return;
+	}
+
+	printf("Usage: %s [OPTIONS...]\n", name);
+	printf("\n");
+	printf("Options:\n");
+
+	for (int opti = 0; opti < optc; opti++) {
+		printf("\t");
+
+		if (optv[opti].flag) {
+			printf("-%c", optv[opti].flag);
+			if (optv[opti].more && !optv[opti].name) {
+				printf("=ARG");
+			}
+		}
+
+		if (optv[opti].name) {
+			if (optv[opti].flag) {
+				printf(", ");
+			}
+			printf("--%s", optv[opti].name);
+			if (optv[opti].more) {
+				printf("=ARG");
+			}
+		}
+
+		printf("\n");
+
+		if (optv[opti].description) {
+			printf("\t\t%s\n", optv[opti].description);
+		}
+
+		printf("\n");
+	}
 }

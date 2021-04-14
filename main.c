@@ -2,10 +2,12 @@
 
 #include "args.h"
 
-int optc = 2;
+int optc = 4;
 ProgramOption optv[] = {
-	{ 'r', "recursive", .more=true },
-	{ 'a',       "all", .more=true },
+	{ 'r', "recursive", .more=true, .description="Do whatever you want to do recursively because thats cool ;)" },
+	{ 'a',       "all", .more=true, .description="Do everything!" },
+	{ 'g',                          .description="Do it globally." },
+	{     .name="help",             .description="Get help with the program." }
 };
 
 int main(int argc, char *argv[]) {

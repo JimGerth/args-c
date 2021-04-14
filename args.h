@@ -22,6 +22,13 @@ typedef struct {
 	// Must be unique.
 	char *name;
 
+	// A description of the option.
+	//
+	// Describe what the program does when the
+	// option is set, what arguments can be
+	// passed in, etc.
+	char *description;
+
 	// Wether this option was set.
 	//
 	// This defaults to be false and should only
@@ -41,5 +48,9 @@ typedef struct {
 // Parse the program arguments [argv] according to the possible
 // options specified in [optv].
 int parse_args(int argc, char *argv[], int optc, ProgramOption optv[]);
+
+// Print out a help screen with all the possible program
+// options [optv] and their descriptions.
+void print_usage(char *name, int optc, ProgramOption optv[]);
 
 #endif
