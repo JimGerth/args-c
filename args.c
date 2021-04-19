@@ -26,9 +26,16 @@ int parse_args(int argc, char *argv[], int optc, ProgramOption optv[]) {
 					// But only up to the length of any given option, as the argument could
 					// be "--all=true", where we only want to match "--all".
 					if (strncmp(argv[argi] + 2, optv[opti].name, namelen) == 0) {
-						printf("New option found: %s\n", optv[opti].name);
 						optv[opti].set = true;
 						argfound = true;
+
+						if (optv[opti].name) {
+							printf("New option found: %s\n", optv[opti].name);
+						} else if (optv[opti].flag) {
+							printf("New option found: %c\n", optv[opti].flag);
+						} else {
+							printf("New option found.\n");
+						}
 
 						// Read in additional argument if the optoion takes one.
 						if (optv[opti].more) {
@@ -65,9 +72,16 @@ int parse_args(int argc, char *argv[], int optc, ProgramOption optv[]) {
 					}
 
 					if (argv[argi][chari] == optv[opti].flag) {
-						printf("New option found: %s\n", optv[opti].name);
 						optv[opti].set = true;
 						argfound = true;
+
+						if (optv[opti].name) {
+							printf("New option found: %s\n", optv[opti].name);
+						} else if (optv[opti].flag) {
+							printf("New option found: %c\n", optv[opti].flag);
+						} else {
+							printf("New option found.\n");
+						}
 
 						if (optv[opti].more) {
 							if (argv[argi][chari + 1] == '=') {
